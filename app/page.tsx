@@ -8,6 +8,7 @@ export default function PratikPortfolio() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0)
   const [currentProject, setCurrentProject] = useState(0)
   const [scrollProgress, setScrollProgress] = useState(0)
+  const [hoveredProject, setHoveredProject] = useState<number | null>(null)
 
   const testimonials = [
     {
@@ -27,27 +28,24 @@ export default function PratikPortfolio() {
       title: "Video Proctoring",
       description:
         "Advanced surveillance system for online examination monitoring with real-time face detection, eye tracking, and behavioral analysis to ensure academic integrity.",
-      year: "2024",
       client: "EdTech Solutions",
-      background: "/video-proctoring-bg.png",
+      background: "/video-proctoring-dashboard.png",
       githubUrl: "https://github.com/Pratiik-glitch/video_proctoring.git",
     },
     {
       title: "API Integration",
       description:
         "Comprehensive backend API development with seamless third-party integrations, robust authentication, and scalable microservices architecture.",
-      year: "2024",
       client: "Enterprise Systems",
-      background: "/api-integration-bg.png",
+      background: "/mobile-leaderboard-app.jpg",
       githubUrl: "https://github.com/Pratiik-glitch/-api_integration.git",
     },
     {
       title: "Sustinlyze360",
       description:
         "Sustainability analytics platform providing comprehensive environmental impact assessment with data visualization and actionable insights for businesses.",
-      year: "2024",
       client: "Green Analytics",
-      background: "/sustinlyze-bg.png",
+      background: "/system-metrics-radar.png",
       githubUrl: "https://github.com/Pratiik-glitch/Sustinlyze360.git",
     },
   ]
@@ -114,7 +112,7 @@ export default function PratikPortfolio() {
                 { id: "projects", label: "PROJECTS" },
                 { id: "education", label: "EDUCATION" },
                 { id: "testimonials", label: "TESTIMONIALS" },
-                { id: "partners", label: "PARTNERS" },
+
                 { id: "blog", label: "BLOG" },
                 { id: "contact", label: "CONTACT" },
               ].map((item) => (
@@ -152,15 +150,19 @@ export default function PratikPortfolio() {
 
       {/* Home Section */}
       <section id="home" className="min-h-screen flex items-center relative overflow-hidden">
+        {/* Background image positioned on the right side */}
         <div className="absolute inset-0">
-          <img
-            src="/personal-photo.jpg"
-            alt="Pratik Portrait"
-            className="w-full h-full object-cover opacity-100 brightness-125 animate-pulse"
-            style={{ animationDuration: "4s" }}
-          />
-          <div className="absolute inset-0 bg-black/20"></div>
+          <div className="absolute right-0 top-0 w-3/5 h-full">
+            <img
+              src="/personal-photo.jpg"
+              alt="Pratik Portrait"
+              className="w-full h-full object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-gradient-to-l from-transparent via-black/10 to-black/70"></div>
+          </div>
+          <div className="absolute left-0 top-0 w-2/5 h-full bg-black"></div>
         </div>
+        
         <div className="relative z-10 max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="animate-fade-in">
             <div className="mb-4 text-gray-300">Product Designer</div>
@@ -175,6 +177,9 @@ export default function PratikPortfolio() {
               <Play className="w-6 h-6 ml-1" />
             </button>
           </div>
+          <div className="hidden lg:block">
+            {/* Empty space to maintain grid layout */}
+          </div>
         </div>
       </section>
 
@@ -182,16 +187,12 @@ export default function PratikPortfolio() {
       <section id="about" className="min-h-screen flex items-center py-20">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="relative">
-            <div className="border border-gray-700 p-16 text-center">
-              <div className="text-8xl font-bold mb-4">
-                9<span className="text-red-500">.</span>
-              </div>
-              <div className="text-gray-400">
-                <div>Years</div>
-                <div>Experience</div>
-                <div>Working</div>
-              </div>
-              <div className="w-16 h-px bg-gray-600 mx-auto mt-8"></div>
+            <div className="border border-gray-700 overflow-hidden">
+              <img
+                src="/9.png"
+                alt="9 Years Experience"
+                className="w-full h-full object-cover min-h-[300px]"
+              />
             </div>
           </div>
           <div>
@@ -199,33 +200,75 @@ export default function PratikPortfolio() {
             <p className="text-gray-400 mb-12">
               Fill appear won't may make moveth signs. Fourth. Good own. Green you're moveth us, lesser.
             </p>
-            <div className="space-y-8">
-              <div>
-                <div className="flex justify-between mb-2">
-                  <span>WEB DESIGN</span>
-                  <span>70%</span>
-                </div>
-                <div className="w-full bg-gray-800 h-1">
-                  <div className="bg-red-500 h-1" style={{ width: "70%" }}></div>
-                </div>
-              </div>
-              <div>
-                <div className="flex justify-between mb-2">
-                  <span>FIGMA</span>
-                  <span>85%</span>
-                </div>
-                <div className="w-full bg-gray-800 h-1">
-                  <div className="bg-red-500 h-1" style={{ width: "85%" }}></div>
-                </div>
-              </div>
-              <div>
-                <div className="flex justify-between mb-2">
-                  <span>WORDPRESS</span>
-                  <span>90%</span>
-                </div>
-                <div className="w-full bg-gray-800 h-1">
-                  <div className="bg-red-500 h-1" style={{ width: "90%" }}></div>
-                </div>
+            {/* Dense Tech Stack Collage */}
+            <div className="relative h-80 overflow-hidden bg-gradient-to-br from-gray-900 to-black rounded-2xl p-8">
+              <div className="relative w-full h-full">
+                {[
+                  { tech: 'react.svg', x: '15%', y: '15%', size: 'w-12 h-12', z: 'z-10' },
+                  { tech: 'next.svg', x: '25%', y: '20%', size: 'w-10 h-10', z: 'z-20' },
+                  { tech: 'ts.svg', x: '35%', y: '25%', size: 'w-11 h-11', z: 'z-30' },
+                  { tech: 'python.svg', x: '45%', y: '15%', size: 'w-14 h-14', z: 'z-40' },
+                  { tech: 'html.svg', x: '55%', y: '30%', size: 'w-10 h-10', z: 'z-50' },
+                  { tech: 'tail.svg', x: '65%', y: '20%', size: 'w-12 h-12', z: 'z-60' },
+                  { tech: 'firebase.svg', x: '75%', y: '35%', size: 'w-11 h-11', z: 'z-70' },
+                  { tech: 'flask.svg', x: '20%', y: '45%', size: 'w-10 h-10', z: 'z-80' },
+                  { tech: 'git.svg', x: '30%', y: '55%', size: 'w-12 h-12', z: 'z-90' },
+                  { tech: 'openCV.svg', x: '40%', y: '50%', size: 'w-11 h-11', z: 'z-100' },
+                  { tech: 'vite.svg', x: '50%', y: '60%', size: 'w-10 h-10', z: 'z-110' },
+                  { tech: 'ubuntu.svg', x: '60%', y: '55%', size: 'w-11 h-11', z: 'z-120' },
+                  { tech: 'shell.svg', x: '70%', y: '50%', size: 'w-10 h-10', z: 'z-130' }
+                ].map((item, index) => (
+                  <div
+                    key={index}
+                    className={`absolute group cursor-pointer ${item.z}`}
+                    style={{
+                      left: item.x,
+                      top: item.y,
+                      transform: `rotate(${Math.random() * 20 - 10}deg)`,
+                    }}
+                  >
+                    <div className="relative">
+                      <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-2 hover:border-red-400 hover:bg-white/20 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-red-500/30">
+                        <img
+                          src={`/techstack/${item.tech}`}
+                          alt={item.tech.replace('.svg', '')}
+                          className={`${item.size} object-contain filter brightness-100 group-hover:brightness-125 transition-all duration-300`}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                
+                {/* Additional smaller icons for density */}
+                {[
+                  { tech: 'react.svg', x: '25%', y: '35%', size: 'w-8 h-8', z: 'z-140' },
+                  { tech: 'next.svg', x: '45%', y: '40%', size: 'w-7 h-7', z: 'z-150' },
+                  { tech: 'ts.svg', x: '65%', y: '45%', size: 'w-8 h-8', z: 'z-160' },
+                  { tech: 'python.svg', x: '15%', y: '65%', size: 'w-9 h-9', z: 'z-170' },
+                  { tech: 'html.svg', x: '35%', y: '70%', size: 'w-7 h-7', z: 'z-180' },
+                  { tech: 'tail.svg', x: '55%', y: '75%', size: 'w-8 h-8', z: 'z-190' },
+                  { tech: 'firebase.svg', x: '75%', y: '70%', size: 'w-7 h-7', z: 'z-200' }
+                ].map((item, index) => (
+                  <div
+                    key={`small-${index}`}
+                    className={`absolute group cursor-pointer ${item.z}`}
+                    style={{
+                      left: item.x,
+                      top: item.y,
+                      transform: `rotate(${Math.random() * 15 - 7.5}deg)`,
+                    }}
+                  >
+                    <div className="relative">
+                      <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-md p-1.5 hover:border-red-400/50 hover:bg-white/10 transition-all duration-300 hover:scale-105">
+                        <img
+                          src={`/techstack/${item.tech}`}
+                          alt={item.tech.replace('.svg', '')}
+                          className={`${item.size} object-contain filter brightness-90 group-hover:brightness-110 transition-all duration-300`}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -233,14 +276,7 @@ export default function PratikPortfolio() {
       </section>
 
       <section id="projects" className="min-h-screen flex items-center py-20 relative overflow-hidden">
-        <div className="absolute inset-0 transition-all duration-1000 ease-in-out">
-          <img
-            src={projects[currentProject].background || "/placeholder.svg"}
-            alt="Project Background"
-            className="w-full h-full object-cover opacity-70 transition-opacity duration-1000"
-          />
-          <div className="absolute inset-0 bg-black/25"></div>
-        </div>
+        {/* Background removed as requested */}
         <div className="relative z-10 max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="transition-all duration-700 ease-in-out">
@@ -251,14 +287,33 @@ export default function PratikPortfolio() {
               <p className="text-gray-300 mb-8 max-w-md transition-all duration-500">
                 {projects[currentProject].description}
               </p>
-              <a
-                href={projects[currentProject].githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block bg-red-500 hover:bg-red-600 px-8 py-3 text-sm font-medium transition-colors"
-              >
-                VIEW ON GITHUB
-              </a>
+              <div className="relative inline-block group">
+                <a
+                  href={projects[currentProject].githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block bg-red-500 hover:bg-red-600 px-8 py-3 text-sm font-medium transition-all duration-300 relative z-10"
+                >
+                  VIEW ON GITHUB
+                </a>
+                <div className="absolute -top-72 left-1/2 transform -translate-x-1/2 z-30 opacity-0 group-hover:opacity-100 transition-all duration-300 ease-in-out scale-95 group-hover:scale-100 pointer-events-none">
+                  <div className="bg-black/95 border-2 border-gray-500 rounded-xl p-3 backdrop-blur-md shadow-2xl w-64 h-64 flex flex-col">
+                    <img
+                      src={projects[currentProject].background || "/placeholder.svg"}
+                      alt={`${projects[currentProject].title} Preview`}
+                      className="w-full h-44 object-cover rounded-lg border border-gray-600 flex-shrink-0"
+                      loading="lazy"
+                    />
+                                         <div className="flex-1 flex flex-col justify-center text-center">
+                       <div className="text-sm font-medium text-white">{projects[currentProject].title}</div>
+                     </div>
+                  </div>
+                  {/* Arrow pointing down */}
+                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-1">
+                    <div className="w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-gray-500"></div>
+                  </div>
+                </div>
+              </div>
               <div className="flex space-x-2 mt-12">
                 {projects.map((_, index) => (
                   <div
@@ -286,20 +341,15 @@ export default function PratikPortfolio() {
               </button>
             </div>
           </div>
-          <div className="mt-20 flex items-center justify-between transition-all duration-500">
-            <div className="flex items-center space-x-4">
-              <Twitter className="w-12 h-12 text-gray-400" />
-              <div>
-                <div className="text-gray-400 text-sm">{projects[currentProject].year}</div>
-                <div className="text-2xl font-bold">{projects[currentProject].client}</div>
-              </div>
-            </div>
-            <div className="text-gray-400 max-w-md">
-              Innovative solutions built with modern technologies, focusing on user experience and scalable architecture
-              for real-world applications.
-            </div>
-            <Twitter className="w-12 h-12 text-gray-400" />
-          </div>
+                     <div className="mt-20 flex items-center justify-between transition-all duration-500">
+             <div className="flex-1">
+               <div className="h-1 bg-red-500 rounded-full"></div>
+             </div>
+             <div className="text-gray-400 max-w-md ml-8">
+               Innovative solutions built with modern technologies, focusing on user experience and scalable architecture
+               for real-world applications.
+             </div>
+           </div>
         </div>
       </section>
 
@@ -393,13 +443,7 @@ export default function PratikPortfolio() {
         </div>
       </section>
 
-      {/* Partners Section */}
-      <section id="partners" className="py-20">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <h2 className="text-5xl font-bold mb-16">Our Partners</h2>
-          {/* Add partners content here */}
-        </div>
-      </section>
+
 
       {/* Blog Section */}
       <section id="blog" className="min-h-screen flex items-center py-20 relative overflow-hidden">
