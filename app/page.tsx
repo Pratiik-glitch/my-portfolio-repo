@@ -620,9 +620,100 @@ export default function PratikPortfolio() {
 
       {/* Blog Section */}
       <section id="blog" className="min-h-screen flex flex-col py-20 relative overflow-hidden">
+        {/* Animated Background */}
         <div className="absolute inset-0">
-          <img src="/modern-workspace.png" alt="Blog Background" className="w-full h-full object-cover opacity-60" />
-          <div className="absolute inset-0 bg-black/40"></div>
+          {/* Animated gradient background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-800"></div>
+          
+          {/* DNA Helix Animation */}
+          <div className="absolute inset-0 overflow-hidden">
+            {[...Array(20)].map((_, i) => {
+              const leftOffset = Math.round(Math.sin(i * 0.5) * 100);
+              return (
+                <div
+                  key={i}
+                  className="absolute w-2 h-2 bg-red-500/60 rounded-full"
+                  style={{
+                    left: `calc(20% + ${leftOffset}px)`,
+                    top: `${i * 40}px`,
+                    animationDelay: `${i * 0.1}s`,
+                    animation: 'dna-float 4s ease-in-out infinite'
+                  }}
+                />
+              );
+            })}
+            {[...Array(20)].map((_, i) => {
+              const leftOffset = Math.round(Math.sin(i * 0.5 + Math.PI) * 100);
+              return (
+                <div
+                  key={`right-${i}`}
+                  className="absolute w-2 h-2 bg-red-500/40 rounded-full"
+                  style={{
+                    left: `calc(80% + ${leftOffset}px)`,
+                    top: `${i * 40}px`,
+                    animationDelay: `${i * 0.1 + 2}s`,
+                    animation: 'dna-float 4s ease-in-out infinite'
+                  }}
+                />
+              );
+            })}
+          </div>
+          
+          {/* Matrix Rain Effect */}
+          <div className="absolute inset-0 overflow-hidden opacity-20">
+            {[...Array(15)].map((_, i) => (
+              <div
+                key={`matrix-${i}`}
+                className="absolute text-red-500/60 text-xs font-mono"
+                style={{
+                  left: `${(i * 7) % 100}%`,
+                  top: '-20px',
+                  animationDelay: `${i * 0.5}s`,
+                  animation: 'matrix-fall 8s linear infinite'
+                }}
+              >
+                {['01', '10', '11', '00', 'RED', 'CODE', 'DEV', 'WEB'].map((char, j) => (
+                  <div key={j} className="mb-2">{char}</div>
+                ))}
+              </div>
+            ))}
+          </div>
+          
+          {/* Morphing Shapes */}
+          <div className="absolute top-1/4 left-1/4 w-32 h-32 animate-morph-shape"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-24 h-24 animate-morph-shape-reverse"></div>
+          
+          {/* Particle System */}
+          <div className="absolute inset-0">
+            {[...Array(30)].map((_, i) => {
+              // Use deterministic positioning based on index
+              const left = (i * 3.33) % 100;
+              const top = (i * 3.33) % 100;
+              const delay = (i * 0.1) % 3;
+              return (
+                <div
+                  key={`particle-${i}`}
+                  className="absolute w-1 h-1 bg-red-500/80 rounded-full"
+                  style={{
+                    left: `${left}%`,
+                    top: `${top}%`,
+                    animationDelay: `${delay}s`,
+                    animation: 'particle-float 6s ease-in-out infinite'
+                  }}
+                />
+              );
+            })}
+          </div>
+          
+          {/* Energy Waves */}
+          <div className="absolute bottom-0 left-0 w-full h-32">
+            <div className="absolute bottom-0 left-0 w-full h-full animate-wave-1"></div>
+            <div className="absolute bottom-0 left-0 w-full h-full animate-wave-2"></div>
+            <div className="absolute bottom-0 left-0 w-full h-full animate-wave-3"></div>
+          </div>
+          
+          {/* Subtle overlay */}
+          <div className="absolute inset-0 bg-black/30"></div>
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-6">
                       <h2 className="text-5xl font-bold mb-24 text-center slide-in-top">My approach</h2>
