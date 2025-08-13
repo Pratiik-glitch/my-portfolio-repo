@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { ChevronLeft, ChevronRight, Play, ArrowRight, X } from "lucide-react"
+import { ChevronLeft, ChevronRight, Play, ArrowRight, X, Mail, Phone, MapPin } from "lucide-react"
 
 export default function PratikPortfolio() {
   const [activeSection, setActiveSection] = useState("home")
@@ -10,6 +10,13 @@ export default function PratikPortfolio() {
   const [scrollProgress, setScrollProgress] = useState(0)
   const [hoveredProject, setHoveredProject] = useState<number | null>(null)
   const [isVideoOpen, setIsVideoOpen] = useState(false)
+  const [contactForm, setContactForm] = useState({
+    name: '',
+    email: '',
+    message: ''
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
 
   const testimonials = [
     {
@@ -154,6 +161,55 @@ export default function PratikPortfolio() {
     setCurrentProject((prev) => (prev - 1 + projects.length) % projects.length)
   }
 
+  const handleContactInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setContactForm(prev => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  const handleContactSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    if (!contactForm.name || !contactForm.email || !contactForm.message) {
+      setSubmitStatus('error')
+      return
+    }
+
+    setIsSubmitting(true)
+    setSubmitStatus('idle')
+
+    try {
+      // Send to Formspree
+      const response = await fetch('https://formspree.io/f/xqalnvvk', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: contactForm.name,
+          email: contactForm.email,
+          message: contactForm.message
+        })
+      })
+      
+      if (response.ok) {
+        setSubmitStatus('success')
+        setContactForm({ name: '', email: '', message: '' })
+        // Reset status after 5 seconds
+        setTimeout(() => setSubmitStatus('idle'), 5000)
+      } else {
+        setSubmitStatus('error')
+      }
+    } catch (error) {
+      console.error('Contact form error:', error)
+      setSubmitStatus('error')
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
   return (
     <div className="bg-black text-white min-h-screen">
       {/* Navigation */}
@@ -252,7 +308,14 @@ export default function PratikPortfolio() {
               <button onClick={() => setIsVideoOpen(true)} className="w-16 h-16 rounded-full border-2 border-white flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 hover:scale-110 hover-lift">
               <Play className="w-6 h-6 ml-1" />
             </button>
-              <button className="px-6 py-3 bg-red-500 hover:bg-red-600 text-white font-medium rounded-lg border-2 border-red-500 hover:border-red-600 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/30 flex items-center space-x-2 group hover-lift">
+              <button 
+                onClick={() => {
+                  // Open PDF in new tab with specific parameters to view in browser
+                  const url = '/resume.pdf#toolbar=1&navpanes=1&scrollbar=1';
+                  window.open(url, '_blank', 'width=1200,height=800,scrollbars=yes,resizable=yes');
+                }}
+                className="px-6 py-3 bg-red-500 hover:bg-red-600 text-white font-medium rounded-lg border-2 border-red-500 hover:border-red-600 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/30 flex items-center space-x-2 group hover-lift"
+              >
                 <span>Here's My Resume</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
               </button>
@@ -785,27 +848,64 @@ export default function PratikPortfolio() {
                 <span className="text-lg">Let's grab a coffee and jump on conversation </span>
                 <span className="text-red-500">chat with me.</span>
               </div>
-              <form className="space-y-6 slide-in-top stagger-2">
-                <input
-                  type="text"
-                  placeholder="Your Name"
-                  className="w-full bg-transparent border-b border-gray-600 py-3 focus:border-white outline-none transition-colors"
-                />
-                <input
-                  type="email"
-                  placeholder="Your Email"
-                  className="w-full bg-transparent border-b border-gray-600 py-3 focus:border-white outline-none transition-colors"
-                />
-                <textarea
-                  placeholder="Message"
-                  rows={4}
-                  className="w-full bg-transparent border-b border-gray-600 py-3 focus:border-white outline-none transition-colors resize-none"
-                ></textarea>
+              <form onSubmit={handleContactSubmit} className="space-y-6 slide-in-top stagger-2">
+                <div>
+                  <input
+                    type="text"
+                    name="name"
+                    value={contactForm.name}
+                    onChange={handleContactInputChange}
+                    placeholder="Your Name"
+                    className="w-full bg-transparent border-b border-gray-600 py-3 focus:border-white outline-none transition-colors"
+                    required
+                  />
+                </div>
+                <div>
+                  <input
+                    type="email"
+                    name="email"
+                    value={contactForm.email}
+                    onChange={handleContactInputChange}
+                    placeholder="Your Email"
+                    className="w-full bg-transparent border-b border-gray-600 py-3 focus:border-white outline-none transition-colors"
+                    required
+                  />
+                </div>
+                <div>
+                  <textarea
+                    name="message"
+                    value={contactForm.message}
+                    onChange={handleContactInputChange}
+                    placeholder="Message"
+                    rows={4}
+                    className="w-full bg-transparent border-b border-gray-600 py-3 focus:border-white outline-none transition-colors resize-none"
+                    required
+                  ></textarea>
+                </div>
+                
+                {/* Status Messages */}
+                {submitStatus === 'success' && (
+                  <div className="text-green-400 text-sm py-2 px-3 bg-green-500/10 border border-green-500/30 rounded">
+                    Message sent successfully! I'll get back to you soon.
+                  </div>
+                )}
+                
+                {submitStatus === 'error' && (
+                  <div className="text-red-400 text-sm py-2 px-3 bg-red-500/10 border border-red-500/30 rounded">
+                    Failed to send message. Please try again or contact me directly.
+                  </div>
+                )}
+                
                 <button
                   type="submit"
-                  className="bg-red-500 hover:bg-red-600 px-8 py-3 text-sm font-medium transition-colors"
+                  disabled={isSubmitting}
+                  className={`px-8 py-3 text-sm font-medium transition-all duration-300 ${
+                    isSubmitting 
+                      ? 'bg-gray-600 cursor-not-allowed' 
+                      : 'bg-red-500 hover:bg-red-600 hover:scale-105'
+                  }`}
                 >
-                  CONTACT ME
+                  {isSubmitting ? 'Sending...' : 'CONTACT ME'}
                 </button>
               </form>
             </div>
