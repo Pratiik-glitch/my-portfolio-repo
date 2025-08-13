@@ -487,7 +487,7 @@ export default function PratikPortfolio() {
                           <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6"><path d="M12 3 1 9l11 6 9-4.5V17h2V9L12 3zm0 13-7-3.5V14c0 2.761 3.134 5 7 5s7-2.239 7-5v-1.5L12 16z"/></svg>
                         </div>
                         <div>
-                          <div className="text-sm text-gray-400">2020 - 2024</div>
+                          <div className="text-sm text-gray-400">2023 - 2027</div>
                           <div className="text-xl font-semibold text-white">B.Tech in Computer Science (Data Science)</div>
                           <div className="text-gray-400">SRM Institute of Science and Technology</div>
                         </div>
