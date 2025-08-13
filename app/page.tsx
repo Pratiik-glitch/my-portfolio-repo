@@ -17,17 +17,18 @@ export default function PratikPortfolio() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [currentTitle, setCurrentTitle] = useState(0)
 
   const testimonials = [
     {
-      text: "Said heaven dry made Them gathering the very second morning us be divide isn't. Saw Seasons winged replenish grass from set can't for he which. You third god unto let.",
-        author: "Inovating",
-        company: "",
+      text: "From the first pulse of creation to the ever-expanding digital horizon, we craft technology that connects minds, shapes worlds, and redefines what's possible with every passing second.",
+        author: "Innovation",
+        company: "Digital Craftsmanship",
     },
     {
-      text: "Said heaven dry made Them gathering the very second morning us be divide isn't. Saw Seasons winged replenish grass from set can't for he which. You third god unto let.",
-        author: "Creating",
-        company: "",
+      text: "From the first pulse of creation to the ever-expanding digital horizon, we craft technology that connects minds, shapes worlds, and redefines what's possible with every passing second.",
+        author: "Creation",
+        company: "Future Building",
     },
   ]
 
@@ -112,6 +113,15 @@ export default function PratikPortfolio() {
       window.removeEventListener("scroll", handleScroll)
       observer.disconnect()
     }
+  }, [])
+
+  // Text transition effect for title
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTitle((prev) => (prev + 1) % 2)
+    }, 4000) // Change every 4 seconds for faster transition
+
+    return () => clearInterval(interval)
   }, [])
 
   const scrollToSection = (sectionId: string) => {
@@ -296,13 +306,16 @@ export default function PratikPortfolio() {
         
         <div className="relative z-10 max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="text-reveal">
-            <div className="mb-4 text-gray-300 slide-in-left stagger-1">Product Designer</div>
+            <div className="mb-4 text-gray-300 slide-in-left stagger-1">
+              <span className="inline-block text-transition">
+                {currentTitle === 0 ? 'Product Designer' : 'Product Developer'}
+              </span>
+            </div>
             <h1 className="text-6xl lg:text-8xl font-bold mb-6 slide-in-left stagger-2">
               Pratik<span className="text-red-500 glow">.</span>
             </h1>
             <p className="text-lg text-gray-300 mb-8 max-w-md slide-in-left stagger-3">
-              Working with client and community, we deliver masterplans that create vibrant new places and spaces,
-              attract people, and encourage.
+              Designing digital solutions that power innovation, engage users, and drive growth.
             </p>
             <div className="flex items-center space-x-4 slide-in-left stagger-4">
               <button onClick={() => setIsVideoOpen(true)} className="w-16 h-16 rounded-full border-2 border-white flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 hover:scale-110 hover-lift">
@@ -798,7 +811,7 @@ export default function PratikPortfolio() {
               <div className="group border border-gray-700 p-8 py-12 hover:border-red-500/80 transition-all duration-500 ease-out hover:scale-105 hover:-translate-y-2 min-h-[400px] flex flex-col justify-center bg-gray-900/30 hover:bg-gray-900/60 backdrop-blur-sm hover:backdrop-blur-md relative overflow-hidden slide-in-bottom stagger-2 animate-float-soft">
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-red-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                 <div className="sheen-overlay"></div>
-                <div className="absolute top-4 right-4 w-2 h-2 bg-purple-400 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 delay-200 animate-pulse"></div>
+                <div className="absolute top-4 right-4 w-2 h-2 bg-red-500 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 delay-200 animate-pulse"></div>
                 <div className="relative z-10">
                   <h3 className="text-3xl font-bold mb-6 text-red-500 group-hover:text-red-400 transition-colors duration-300">Development & Progress Update</h3>
                   <p className="text-gray-300 text-lg leading-relaxed group-hover:text-gray-200 transition-colors duration-300">
@@ -836,7 +849,7 @@ export default function PratikPortfolio() {
             <div className="slide-in-left">
               <h2 className="text-5xl font-bold mb-8 slide-in-top stagger-1">Contact</h2>
               <p className="text-gray-400 mb-12 slide-in-top stagger-2">
-                You'll called for yielding male, so lights Stars abundantly, is their.
+                Ready to collaborate on your next project? Let's discuss how we can bring your ideas to life.
               </p>
               <div className="space-y-6 slide-in-top stagger-3">
                 <div className="text-2xl font-bold">+91 7061917445</div>

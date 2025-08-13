@@ -714,3 +714,23 @@ img:hover {
 .animate-float-soft {
   animation: float-soft 6s ease-in-out infinite;
 }
+
+/* Text transition animation for title */
+@keyframes text-fade-in-out {
+  0%, 40% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  45%, 55% {
+    opacity: 0;
+    transform: translateY(-5px) scale(0.95);
+  }
+  60%, 100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.text-transition {
+  animation: text-fade-in-out 4s ease-in-out infinite;
+}
